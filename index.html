@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <title>상사 기분 예측기</title>
+
   <style>
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -31,8 +32,13 @@
       border-radius: 8px;
       cursor: pointer;
     }
+    .result {
+      margin-top: 20px;
+      font-size: 18px;
+    }
   </style>
 </head>
+
 <body>
   <div class="card">
     <h1>📊 상사 기분 예측기</h1>
@@ -51,21 +57,31 @@
     </select>
 
     <button onclick="calculate()">오늘 보고 가능?</button>
-    <div id="result"></div>
+    <div class="result" id="result"></div>
   </div>
 
   <script>
     function calculate() {
       let score = 60;
-      if (document.getElementById("lunch").value === "noeat") score -= 15;
-      if (document.getElementById("overtime").value === "y") score -= 25;
 
-      let msg = score >= 70 ? "🟢 보고 GO"
-              : score >= 50 ? "🟡 짧게만"
-              : "🔴 오늘은 참자";
+      const lunch = document.getElementById("lunch").value;
+      const overtime = document.getElementById("overtime").value;
+
+      if (lunch === "noeat") score -= 15;
+      if (overtime === "y") score -= 25;
+
+      const day = new Date().getDate();
+      score += (day % 10) - 5;
+
+      score = Math.max(0, Math.min(100, score));
+
+      let msg =
+        score >= 75 ? "🟢 지금 보고해도 안전" :
+        score >= 50 ? "🟡 짧게만 보고" :
+        "🔴 오늘은 보고 금지";
 
       document.getElementById("result").innerHTML =
-        `<p>기분 점수: ${score}</p><p>${msg}</p>`;
+        `<p>기분 점수: <b>${score}</b></p><p>${msg}</p>`;
     }
   </script>
 </body>
