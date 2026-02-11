@@ -22,15 +22,8 @@
       text-align: center;
     }
 
-    h1 {
-      margin-bottom: 6px;
-    }
-
-    p.subtitle {
-      color: #555;
-      font-size: 14px;
-      margin-bottom: 20px;
-    }
+    h1 { margin-bottom: 6px; }
+    .subtitle { font-size: 14px; color: #555; margin-bottom: 20px; }
 
     label {
       display: block;
@@ -48,30 +41,36 @@
       border-radius: 10px;
     }
 
-    select {
-      border: 1px solid #ddd;
-    }
+    select { border: 1px solid #ddd; }
 
     button {
       background: #4f46e5;
       color: white;
       border: none;
-      margin-top: 18px;
+      margin-top: 14px;
       cursor: pointer;
     }
 
-    button:hover {
-      background: #4338ca;
+    button.secondary {
+      background: #e5e7eb;
+      color: #111;
     }
 
-    .result {
-      margin-top: 22px;
-      font-size: 17px;
+    button:hover { opacity: 0.9; }
+
+    .result, .forecast {
+      margin-top: 20px;
+      font-size: 16px;
     }
 
     .score {
       font-size: 20px;
       font-weight: bold;
+    }
+
+    .day {
+      padding: 8px 0;
+      border-bottom: 1px dashed #ddd;
     }
 
     .footer {
@@ -85,7 +84,7 @@
 <body>
   <div class="card">
     <h1>📊 상사 기분 예측기</h1>
-    <p class="subtitle">오늘 보고… 살아남을 수 있을까?</p>
+    <p class="subtitle">보고… 오늘 할까? 미룰까?</p>
 
     <label>🍱 상사 점심 상태</label>
     <select id="lunch">
@@ -99,63 +98,98 @@
       <option value="y">함</option>
     </select>
 
-    <button onclick="calculate()">오늘 보고 가능?</button>
+    <button onclick="calculateToday()">오늘 결과 보기</button>
+    <button class="secondary" onclick="previewDays(3)">3일 미리보기</button>
+    <button class="secondary" onclick="previewDays(5)">5일 미리보기</button>
 
     <div class="result" id="result"></div>
+    <div class="forecast" id="forecast"></div>
 
-    <div class="footer">※ 재미 + 회사 생존용 서비스입니다</div>
+    <div class="footer">※ 사주 + 회사 생존용 재미 앱</div>
   </div>
 
   <script>
-    function fortuneByDate() {
-      const d = new Date();
-      return (d.getDate() * 3 + d.getMonth() * 7 + d.getFullYear()) % 21 - 10;
+    /* ---------- 날짜 기반 랜덤 ---------- */
+    function seededRandom(seed) {
+      const x = Math.sin(seed) * 10000;
+      return x - Math.floor(x);
     }
 
-    function weekdayBonus() {
-      const w = new Date().getDay();
+    function dateSeed(date) {
+      return date.getFullYear() * 10000 +
+             (date.getMonth() + 1) * 100 +
+             date.getDate();
+    }
+
+    function fortuneByDate(date) {
+      return Math.floor(seededRandom(dateSeed(date)) * 21) - 10;
+    }
+
+    function weekdayBonus(date) {
+      const w = date.getDay();
       if (w === 1) return -10; // 월요일
       if (w === 5) return 8;   // 금요일
       return 0;
     }
 
-    function randomChaos() {
-      return Math.floor(Math.random() * 11) - 5; // -5 ~ +5
-    }
-
-    function calculate() {
+    /* ---------- 점수 계산 ---------- */
+    function calculateScore(date, lunch, overtime) {
       let score = 60;
-
-      const lunch = document.getElementById("lunch").value;
-      const overtime = document.getElementById("overtime").value;
-
-      score += fortuneByDate();
-      score += weekdayBonus();
-      score += randomChaos();
+      score += fortuneByDate(date);
+      score += weekdayBonus(date);
 
       if (lunch === "noeat") score -= 15;
       if (overtime === "y") score -= 25;
 
-      score = Math.max(0, Math.min(100, score));
+      return Math.max(0, Math.min(100, score));
+    }
 
-      let msg = "";
-      let emoji = "";
+    function messageForScore(score) {
+      if (score >= 75) return ["🟢", "지금 보고해도 안전"];
+      if (score >= 50) return ["🟡", "짧고 핵심만 보고"];
+      return ["🔴", "오늘은 보고하지 마라"];
+    }
 
-      if (score >= 75) {
-        msg = "지금 보고하면 칭찬 받을 확률 있음";
-        emoji = "🟢";
-      } else if (score >= 50) {
-        msg = "짧고 핵심만 보고하자";
-        emoji = "🟡";
-      } else {
-        msg = "오늘은 보고하지 마라. 생존 우선";
-        emoji = "🔴";
-      }
+    /* ---------- 오늘 ---------- */
+    function calculateToday() {
+      const lunch = lunch.value;
+      const overtime = overtime.value;
+      const today = new Date();
 
-      document.getElementById("result").innerHTML = `
-        <div class="score">${emoji} 기분 점수: ${score} / 100</div>
+      const score = calculateScore(today, lunch, overtime);
+      const [emoji, msg] = messageForScore(score);
+
+      result.innerHTML = `
+        <div class="score">${emoji} ${score} / 100</div>
         <p>${msg}</p>
       `;
+      forecast.innerHTML = "";
+    }
+
+    /* ---------- 미리보기 ---------- */
+    function previewDays(days) {
+      const lunch = document.getElementById("lunch").value;
+      const overtime = document.getElementById("overtime").value;
+
+      let html = "";
+
+      for (let i = 0; i < days; i++) {
+        const d = new Date();
+        d.setDate(d.getDate() + i);
+
+        const score = calculateScore(d, lunch, overtime);
+        const [emoji, msg] = messageForScore(score);
+
+        html += `
+          <div class="day">
+            📅 ${d.getMonth()+1}/${d.getDate()} →
+            <b>${score}</b> ${emoji} ${msg}
+          </div>
+        `;
+      }
+
+      forecast.innerHTML = html;
+      result.innerHTML = "";
     }
   </script>
 </body>
