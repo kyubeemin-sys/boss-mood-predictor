@@ -1,135 +1,72 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
+<!DOCTYPE html>
+<html lang="ko">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta http-equiv="Content-Style-Type" content="text/css">
-  <title></title>
-  <meta name="Generator" content="Cocoa HTML Writer">
-  <meta name="CocoaVersion" content="2575.7">
-  <style type="text/css">
-    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
-    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
+  <meta charset="UTF-8" />
+  <title>상사 기분 예측기</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #f4f6f8;
+      padding: 40px;
+    }
+    .card {
+      background: white;
+      max-width: 420px;
+      margin: auto;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+    select, button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 12px;
+      font-size: 16px;
+    }
+    button {
+      background: #4f46e5;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
-<p class="p1">&lt;!DOCTYPE html&gt;</p>
-<p class="p1">&lt;html lang="ko"&gt;</p>
-<p class="p1">&lt;head&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;meta charset="UTF-8" /&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;title&gt;상사 기분 예측기&lt;/title&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;style&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>body {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>background: #f4f6f8;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>padding: 40px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.card {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>background: white;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>max-width: 420px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>margin: auto;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>padding: 30px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>border-radius: 12px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>box-shadow: 0 6px 18px rgba(0,0,0,0.1);</p>
-<p class="p1"><span class="Apple-converted-space">      </span>text-align: center;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p1"><span class="Apple-converted-space">    </span>h1 {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>margin-bottom: 10px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p1"><span class="Apple-converted-space">    </span>select, button {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>width: 100%;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>padding: 12px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>margin-top: 12px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>font-size: 16px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p1"><span class="Apple-converted-space">    </span>button {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>background: #4f46e5;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>color: white;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>border: none;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>border-radius: 8px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>cursor: pointer;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p1"><span class="Apple-converted-space">    </span>button:hover {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>background: #4338ca;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.result {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>margin-top: 20px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>font-size: 18px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;/style&gt;</p>
-<p class="p1">&lt;/head&gt;</p>
-<p class="p1">&lt;body&gt;</p>
-<p class="p2"><br></p>
-<p class="p1">&lt;div class="card"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;h1&gt;📊 상사 기분 예측기&lt;/h1&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;p&gt;오늘 보고… 해도 될까?&lt;/p&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;label&gt;상사 점심 상태&lt;/label&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;select id="lunch"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;option value="eat"&gt;먹음&lt;/option&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;option value="noeat"&gt;못먹음&lt;/option&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;/select&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;label&gt;어제 야근 여부&lt;/label&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;select id="overtime"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;option value="n"&gt;안 함&lt;/option&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;option value="y"&gt;함&lt;/option&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;/select&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;button onclick="calculate()"&gt;오늘 보고 가능?&lt;/button&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="result" id="result"&gt;&lt;/div&gt;</p>
-<p class="p1">&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1">&lt;script&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>function calculateDailyFortune() {</p>
-<p class="p1"><span class="Apple-converted-space">    </span>const today = new Date();</p>
-<p class="p1"><span class="Apple-converted-space">    </span>const day = today.getDate();</p>
-<p class="p1"><span class="Apple-converted-space">    </span>const month = today.getMonth() + 1;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>const year = today.getFullYear();</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>// 운세 느낌용 랜덤하지만 날짜 기반</p>
-<p class="p1"><span class="Apple-converted-space">    </span>return (day * 3 + month * 2 + year) % 21 - 10;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>function weekdayPenalty() {</p>
-<p class="p1"><span class="Apple-converted-space">    </span>const weekday = new Date().getDay(); // 일=0</p>
-<p class="p1"><span class="Apple-converted-space">    </span>if (weekday === 1) return -10; // 월요일</p>
-<p class="p1"><span class="Apple-converted-space">    </span>if (weekday === 5) return 5; <span class="Apple-converted-space">  </span>// 금요일</p>
-<p class="p1"><span class="Apple-converted-space">    </span>return 0;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>function calculate() {</p>
-<p class="p1"><span class="Apple-converted-space">    </span>let score = 60; // 상사 기본 성향 점수</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>const lunch = document.getElementById("lunch").value;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>const overtime = document.getElementById("overtime").value;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>score += calculateDailyFortune();</p>
-<p class="p1"><span class="Apple-converted-space">    </span>score += weekdayPenalty();</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>if (lunch === "noeat") score -= 15;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>if (overtime === "y") score -= 25; // 야근 + 예민함 보정</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>score = Math.max(0, Math.min(100, score));</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>let message = "";</p>
-<p class="p1"><span class="Apple-converted-space">    </span>if (score &gt;= 75) {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>message = "🟢 지금 보고하면 오히려 칭찬 받을 확률 있음";</p>
-<p class="p1"><span class="Apple-converted-space">    </span>} else if (score &gt;= 50) {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>message = "🟡 짧고 핵심만 보고";</p>
-<p class="p1"><span class="Apple-converted-space">    </span>} else {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>message = "🔴 오늘은 보고하지 마라. 생존 우선";</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>document.getElementById("result").innerHTML = `</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;p&gt;🧮 기분 점수: &lt;b&gt;${score}&lt;/b&gt; / 100&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;p&gt;${message}&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;p style="font-size: 12px; color: gray;"&gt;※ 재미용입니다 ㅋㅋ&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>`;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p1">&lt;/script&gt;</p>
-<p class="p2"><br></p>
-<p class="p1">&lt;/body&gt;</p>
-<p class="p1">&lt;/html&gt;</p>
+  <div class="card">
+    <h1>📊 상사 기분 예측기</h1>
+    <p>오늘 보고… 해도 될까?</p>
+
+    <label>상사 점심 상태</label>
+    <select id="lunch">
+      <option value="eat">먹음</option>
+      <option value="noeat">못먹음</option>
+    </select>
+
+    <label>어제 야근 여부</label>
+    <select id="overtime">
+      <option value="n">안 함</option>
+      <option value="y">함</option>
+    </select>
+
+    <button onclick="calculate()">오늘 보고 가능?</button>
+    <div id="result"></div>
+  </div>
+
+  <script>
+    function calculate() {
+      let score = 60;
+      if (document.getElementById("lunch").value === "noeat") score -= 15;
+      if (document.getElementById("overtime").value === "y") score -= 25;
+
+      let msg = score >= 70 ? "🟢 보고 GO"
+              : score >= 50 ? "🟡 짧게만"
+              : "🔴 오늘은 참자";
+
+      document.getElementById("result").innerHTML =
+        `<p>기분 점수: ${score}</p><p>${msg}</p>`;
+    }
+  </script>
 </body>
 </html>
