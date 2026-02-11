@@ -2,39 +2,82 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>상사 기분 예측기</title>
 
   <style>
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: #f4f6f8;
-      padding: 40px;
+      background: linear-gradient(135deg, #eef2ff, #f8fafc);
+      padding: 20px;
     }
+
     .card {
       background: white;
       max-width: 420px;
       margin: auto;
-      padding: 30px;
-      border-radius: 12px;
-      box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+      padding: 28px;
+      border-radius: 16px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
       text-align: center;
     }
+
+    h1 {
+      margin-bottom: 6px;
+    }
+
+    p.subtitle {
+      color: #555;
+      font-size: 14px;
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      text-align: left;
+      margin-top: 14px;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
     select, button {
       width: 100%;
       padding: 12px;
-      margin-top: 12px;
+      margin-top: 6px;
       font-size: 16px;
+      border-radius: 10px;
     }
+
+    select {
+      border: 1px solid #ddd;
+    }
+
     button {
       background: #4f46e5;
       color: white;
       border: none;
-      border-radius: 8px;
+      margin-top: 18px;
       cursor: pointer;
     }
+
+    button:hover {
+      background: #4338ca;
+    }
+
     .result {
-      margin-top: 20px;
-      font-size: 18px;
+      margin-top: 22px;
+      font-size: 17px;
+    }
+
+    .score {
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .footer {
+      margin-top: 18px;
+      font-size: 12px;
+      color: #888;
     }
   </style>
 </head>
@@ -42,46 +85,77 @@
 <body>
   <div class="card">
     <h1>📊 상사 기분 예측기</h1>
-    <p>오늘 보고… 해도 될까?</p>
+    <p class="subtitle">오늘 보고… 살아남을 수 있을까?</p>
 
-    <label>상사 점심 상태</label>
+    <label>🍱 상사 점심 상태</label>
     <select id="lunch">
       <option value="eat">먹음</option>
-      <option value="noeat">못먹음</option>
+      <option value="noeat">못 먹음</option>
     </select>
 
-    <label>어제 야근 여부</label>
+    <label>🌙 어제 야근 여부</label>
     <select id="overtime">
       <option value="n">안 함</option>
       <option value="y">함</option>
     </select>
 
     <button onclick="calculate()">오늘 보고 가능?</button>
+
     <div class="result" id="result"></div>
+
+    <div class="footer">※ 재미 + 회사 생존용 서비스입니다</div>
   </div>
 
   <script>
+    function fortuneByDate() {
+      const d = new Date();
+      return (d.getDate() * 3 + d.getMonth() * 7 + d.getFullYear()) % 21 - 10;
+    }
+
+    function weekdayBonus() {
+      const w = new Date().getDay();
+      if (w === 1) return -10; // 월요일
+      if (w === 5) return 8;   // 금요일
+      return 0;
+    }
+
+    function randomChaos() {
+      return Math.floor(Math.random() * 11) - 5; // -5 ~ +5
+    }
+
     function calculate() {
       let score = 60;
 
       const lunch = document.getElementById("lunch").value;
       const overtime = document.getElementById("overtime").value;
 
+      score += fortuneByDate();
+      score += weekdayBonus();
+      score += randomChaos();
+
       if (lunch === "noeat") score -= 15;
       if (overtime === "y") score -= 25;
 
-      const day = new Date().getDate();
-      score += (day % 10) - 5;
-
       score = Math.max(0, Math.min(100, score));
 
-      let msg =
-        score >= 75 ? "🟢 지금 보고해도 안전" :
-        score >= 50 ? "🟡 짧게만 보고" :
-        "🔴 오늘은 보고 금지";
+      let msg = "";
+      let emoji = "";
 
-      document.getElementById("result").innerHTML =
-        `<p>기분 점수: <b>${score}</b></p><p>${msg}</p>`;
+      if (score >= 75) {
+        msg = "지금 보고하면 칭찬 받을 확률 있음";
+        emoji = "🟢";
+      } else if (score >= 50) {
+        msg = "짧고 핵심만 보고하자";
+        emoji = "🟡";
+      } else {
+        msg = "오늘은 보고하지 마라. 생존 우선";
+        emoji = "🔴";
+      }
+
+      document.getElementById("result").innerHTML = `
+        <div class="score">${emoji} 기분 점수: ${score} / 100</div>
+        <p>${msg}</p>
+      `;
     }
   </script>
 </body>
